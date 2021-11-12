@@ -27219,7 +27219,7 @@ houseroom
 housetop/SM
 housewares/M
 housewarming/SM
-housewife/MY
+housewife/MYW
 housewives
 housework/M
 housing/MS
@@ -29598,7 +29598,7 @@ knicker/S
 knickerbockers/M
 knickers/M
 knickknack/MS
-knife/DSMG
+knife/DSMGW
 knight/MDYSG
 knighthood/MS
 knightliness/M
@@ -30261,7 +30261,7 @@ lien/MS
 lieu/M
 lieutenancy/M
 lieutenant/MS
-life/MZR
+life/MZRW
 lifebelt/S
 lifeblood/M
 lifeboat/MS
@@ -45534,7 +45534,7 @@ thickheaded/M
 thickness/MS
 thicko/S
 thickset
-thief/M
+thief/MW
 thieve/DSG
 thievery/M
 thieving/M
@@ -48845,7 +48845,7 @@ wield/SDRZG
 wielder/M
 wiener/SM
 wienie/SM
-wife/MY
+wife/MYW
 wifeless
 wig/SM
 wigeon/M

@@ -1,10 +1,11 @@
 CREATE EXTENSION hunspell_en_us;
 CREATE TABLE table1(name varchar);
 INSERT INTO table1 VALUES ('leaves'), ('leaved'), ('leaving'),
-						('inability'), ('abilities'), ('disability'), ('ability');
+                        ('inability'), ('abilities'), ('disability'), ('ability'),
+                        ('wives'), ('wife'), ('lives'), ('life'), ('knives'), ('knife');
 SELECT d.* FROM table1 AS t, LATERAL ts_debug('english_hunspell', t.name) AS d;
-   alias   |   description   |   token    |          dictionaries           |    dictionary    |  lexemes  
------------+-----------------+------------+---------------------------------+------------------+-----------
+   alias   |   description   |   token    |          dictionaries           |    dictionary    |    lexemes     
+-----------+-----------------+------------+---------------------------------+------------------+----------------
  asciiword | Word, all ASCII | leaves     | {english_hunspell,english_stem} | english_hunspell | {leave}
  asciiword | Word, all ASCII | leaved     | {english_hunspell,english_stem} | english_hunspell | {leave}
  asciiword | Word, all ASCII | leaving    | {english_hunspell,english_stem} | english_hunspell | {leave}
@@ -12,11 +13,17 @@ SELECT d.* FROM table1 AS t, LATERAL ts_debug('english_hunspell', t.name) AS d;
  asciiword | Word, all ASCII | abilities  | {english_hunspell,english_stem} | english_hunspell | {ability}
  asciiword | Word, all ASCII | disability | {english_hunspell,english_stem} | english_hunspell | {ability}
  asciiword | Word, all ASCII | ability    | {english_hunspell,english_stem} | english_hunspell | {ability}
-(7 rows)
+ asciiword | Word, all ASCII | wives      | {english_hunspell,english_stem} | english_hunspell | {wive,wife}
+ asciiword | Word, all ASCII | wife       | {english_hunspell,english_stem} | english_hunspell | {wife}
+ asciiword | Word, all ASCII | lives      | {english_hunspell,english_stem} | english_hunspell | {live,life}
+ asciiword | Word, all ASCII | life       | {english_hunspell,english_stem} | english_hunspell | {life}
+ asciiword | Word, all ASCII | knives     | {english_hunspell,english_stem} | english_hunspell | {knives,knife}
+ asciiword | Word, all ASCII | knife      | {english_hunspell,english_stem} | english_hunspell | {knife}
+(13 rows)
 
 CREATE INDEX name_idx ON table1 USING GIN (to_tsvector('english_hunspell', "name"));
 SELECT * FROM table1 WHERE to_tsvector('english_hunspell', name)
-	@@ to_tsquery('english_hunspell', 'leaving');
+    @@ to_tsquery('english_hunspell', 'leaving');
   name   
 ---------
  leaves
@@ -25,7 +32,7 @@ SELECT * FROM table1 WHERE to_tsvector('english_hunspell', name)
 (3 rows)
 
 SELECT * FROM table1 WHERE to_tsvector('english_hunspell', name)
-	@@ to_tsquery('english_hunspell', 'abilities');
+    @@ to_tsquery('english_hunspell', 'abilities');
     name    
 ------------
  inability
@@ -35,7 +42,7 @@ SELECT * FROM table1 WHERE to_tsvector('english_hunspell', name)
 (4 rows)
 
 SELECT * FROM table1 WHERE to_tsvector('english_hunspell', name)
-	@@ to_tsquery('english_hunspell', 'ability');
+    @@ to_tsquery('english_hunspell', 'ability');
     name    
 ------------
  inability
@@ -43,11 +50,35 @@ SELECT * FROM table1 WHERE to_tsvector('english_hunspell', name)
  disability
  ability
 (4 rows)
+
+SELECT * FROM table1 WHERE to_tsvector('english_hunspell', name)
+    @@ to_tsquery('english_hunspell', 'wives');
+ name  
+-------
+ wives
+ wife
+(2 rows)
+
+SELECT * FROM table1 WHERE to_tsvector('english_hunspell', name)
+    @@ to_tsquery('english_hunspell', 'lives');
+ name  
+-------
+ lives
+ life
+(2 rows)
+
+SELECT * FROM table1 WHERE to_tsvector('english_hunspell', name)
+    @@ to_tsquery('english_hunspell', 'knives');
+  name  
+--------
+ knives
+ knife
+(2 rows)
 
 DROP INDEX name_idx;
 CREATE INDEX name_idx ON table1 USING GIST (to_tsvector('english_hunspell', "name"));
 SELECT * FROM table1 WHERE to_tsvector('english_hunspell', name)
-	@@ to_tsquery('english_hunspell', 'leaving');
+    @@ to_tsquery('english_hunspell', 'leaving');
   name   
 ---------
  leaves
@@ -56,7 +87,7 @@ SELECT * FROM table1 WHERE to_tsvector('english_hunspell', name)
 (3 rows)
 
 SELECT * FROM table1 WHERE to_tsvector('english_hunspell', name)
-	@@ to_tsquery('english_hunspell', 'abilities');
+    @@ to_tsquery('english_hunspell', 'abilities');
     name    
 ------------
  inability
@@ -66,7 +97,7 @@ SELECT * FROM table1 WHERE to_tsvector('english_hunspell', name)
 (4 rows)
 
 SELECT * FROM table1 WHERE to_tsvector('english_hunspell', name)
-	@@ to_tsquery('english_hunspell', 'ability');
+    @@ to_tsquery('english_hunspell', 'ability');
     name    
 ------------
  inability
@@ -74,4 +105,28 @@ SELECT * FROM table1 WHERE to_tsvector('english_hunspell', name)
  disability
  ability
 (4 rows)
+
+SELECT * FROM table1 WHERE to_tsvector('english_hunspell', name)
+    @@ to_tsquery('english_hunspell', 'wives');
+ name  
+-------
+ wives
+ wife
+(2 rows)
+
+SELECT * FROM table1 WHERE to_tsvector('english_hunspell', name)
+    @@ to_tsquery('english_hunspell', 'lives');
+ name  
+-------
+ lives
+ life
+(2 rows)
+
+SELECT * FROM table1 WHERE to_tsvector('english_hunspell', name)
+    @@ to_tsquery('english_hunspell', 'knives');
+  name  
+--------
+ knives
+ knife
+(2 rows)
 

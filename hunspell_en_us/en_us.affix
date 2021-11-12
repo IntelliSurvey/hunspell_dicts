@@ -41,6 +41,9 @@ SFX V N 2
 SFX V   e     ive        e
 SFX V   0     ive        [^e]
 
+SFX W N 1
+SFX W   fe    ves        ife
+
 SFX N Y 3
 SFX N   e     ion        e
 SFX N   y     ication    y 
