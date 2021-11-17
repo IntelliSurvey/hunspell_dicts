@@ -10,6 +10,12 @@ CREATE TEXT SEARCH DICTIONARY english_hunspell (
     StopWords = english
 );
 
+CREATE TEXT SEARCH DICTIONARY thesaurus_en (
+    TEMPLATE = thesaurus,
+    DictFile = thesaurus_en,
+    Dictionary = pg_catalog.simple
+);
+
 COMMENT ON TEXT SEARCH DICTIONARY english_hunspell IS 'hunspell dictionary for english language';
 
 CREATE TEXT SEARCH CONFIGURATION english_hunspell (
@@ -21,4 +27,4 @@ COMMENT ON TEXT SEARCH CONFIGURATION english_hunspell IS 'hunspell configuration
 ALTER TEXT SEARCH CONFIGURATION english_hunspell
     ALTER MAPPING FOR asciiword, asciihword, hword_asciipart,
         word, hword, hword_part
-    WITH english_hunspell, english_stem;
+    WITH thesaurus_en, english_hunspell, english_stem;
